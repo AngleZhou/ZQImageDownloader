@@ -15,12 +15,9 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
 @property (nonatomic, readwrite, getter=isExecuting) BOOL executing;
 @property (nonatomic, readwrite, getter=isFinished) BOOL finished;
 
-@property (nonatomic, copy) ZQImageDownloadProgressBlock progressBlock;
-@property (nonatomic, copy) ZQImageDownloadDoneBlock doneBlock;
-@property (nonatomic, copy) ZQImageDownloadCancelBlock cancelBlock;
-
 @property (nonatomic, strong) NSURLSession *session;
-@property (nonatomic, strong) NSData *imageData;
+@property (nonatomic, strong) NSMutableData *imageData;
+
 @end
 
 @implementation ZQImageDownloadOperation
@@ -30,12 +27,12 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
 
 
 
-- (instancetype)initWithRequest:(NSURLRequest *)request inSession:(NSURLSession *)session progress:(ZQImageDownloadProgressBlock)progressBlock completion:(ZQImageDownloadDoneBlock)doneBlock cancellation:(ZQImageDownloadCancelBlock)cancelBlock {
+- (instancetype)initWithRequest:(NSURLRequest *)request inSession:(NSURLSession *)session progress:(ZQImageDownloadProgressBlock)progressBlock completion:(ZQImageDownloadDoneBlock)doneBlock {
     if (self = [super init]) {
         _request = request;
-        _progressBlock = [progressBlock copy];
-        _doneBlock = [doneBlock copy];
-        _cancelBlock = [cancelBlock copy];
+        _session = session;
+        
+        _blocks = [NSMutableArray array];
         
         _executing = NO;
         _finished = NO;
@@ -65,7 +62,6 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
 }
 
 - (void)reset {
-    self.doneBlock = nil;
     self.imageData = nil;
     
 }
@@ -77,46 +73,87 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
         return;
     }
     
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    config.timeoutIntervalForRequest = 15;
-    self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
-    
+    self.dataTask = [self.session dataTaskWithRequest:self.request];
+    [self.dataTask resume];
+    for (ZQImageDownloadProgressBlock process in [self blocksForKey:kOperationProcessBlock]) {
+        process(0);
+    }
 }
 
-#pragma mark NSURLSessionTaskDelegate
+- (NSArray *)blocksForKey:(NSString *)key {
+    NSMutableArray *mArr = [NSMutableArray array];
+    for (NSDictionary *dic in self.blocks) {
+        [mArr addObject:dic[key]];
+    }
+    return mArr;
+}
+
+
+#pragma mark - Private
+
+- (void)doneBlocksWithImage:(UIImage *)image imageData:(NSData *)imageData error:(NSError *)error {
+    NSArray *arrBlocks = [self blocksForKey:kOperationDoneBlock];
+    dispatch_main_async_safe(^{
+        for (ZQImageDownloadDoneBlock doneBlock in arrBlocks) {
+            doneBlock(image, imageData, error);
+        }
+    });
+}
+
+#pragma mark - NSURLSessionTaskDelegate
 //完成
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     //
-    if (error) {
-        if (self.doneBlock) {
-            self.doneBlock(nil, nil, error);
+    if ([self blocksForKey:kOperationDoneBlock].count > 0) {
+        if (error) {
+            [self doneBlocksWithImage:nil imageData:nil error:error];
         }
-    }
-    else {
-        if (self.doneBlock) {
+        else {
             if (self.imageData) {
                 UIImage *image = [UIImage imageWithData:self.imageData];//只考虑了jpg, png
                 if (CGSizeEqualToSize(image.size, CGSizeZero)) {
                     NSError *err = [NSError errorWithDomain:ZQImageErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Image size is zero"}];
-                    self.doneBlock(nil, nil, err);
+                    [self doneBlocksWithImage:nil imageData:nil error:err];
                 }
                 else {
-                    self.doneBlock(image, self.imageData, nil);
+                    [self doneBlocksWithImage:image imageData:self.imageData error:nil];
                 }
             }
             else {
                 NSError *err = [NSError errorWithDomain:ZQImageErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Image Data is nil"}];
-                self.doneBlock(nil, nil, err);
+                [self doneBlocksWithImage:nil imageData:nil error:err];
             }
+            
         }
     }
     
+    
     [self done];
 }
-//取消
 
-//失败
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
+    
+}
 
-//进度
+#pragma mark - NSURLSessionDataDelegate
+
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
+    NSLog(@"%@", response);
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
+    [self.imageData appendData:data];
+    //progress handling
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable))completionHandler {
+    
+}
+
+
+
 
 @end

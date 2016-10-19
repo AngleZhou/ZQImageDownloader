@@ -8,13 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "ZQImageDownloadHeader.h"
 
-typedef void(^ZQImageDownloadProgressBlock)(CGFloat progress);
-typedef void(^ZQImageDownloadDoneBlock)(void);
 
 @interface ZQImageDownloadManager : NSObject
-@property (assign, nonatomic) NSInteger maxConcurrentDownloads;
-@property (assign, nonatomic) NSTimeInterval downloadTimeout;
+@property (nonatomic, assign) NSInteger maxConcurrentDownloads;
+@property (nonatomic, assign) NSTimeInterval downloadTimeout;
 
 - (id)downloadImageWithURL:(NSURL *)url progress:(ZQImageDownloadProgressBlock)progressBlock completion:(ZQImageDownloadDoneBlock)doneBlock;
 @end

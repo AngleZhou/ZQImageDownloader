@@ -35,6 +35,7 @@
 		7C79E29A1DB3CC5800248F9D /* ZQImageDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQImageDownloadManager.m; sourceTree = "<group>"; };
 		7C79E29C1DB3CF5700248F9D /* ZQImageDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQImageDownloadOperation.h; sourceTree = "<group>"; };
 		7C79E29D1DB3CF5700248F9D /* ZQImageDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQImageDownloadOperation.m; sourceTree = "<group>"; };
+		7C79E2A11DB7B79500248F9D /* ZQImageDownloadHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQImageDownloadHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +78,7 @@
 				7C79E29A1DB3CC5800248F9D /* ZQImageDownloadManager.m */,
 				7C79E29C1DB3CF5700248F9D /* ZQImageDownloadOperation.h */,
 				7C79E29D1DB3CF5700248F9D /* ZQImageDownloadOperation.m */,
+				7C79E2A11DB7B79500248F9D /* ZQImageDownloadHeader.h */,
 				7C79E2841DB328BE00248F9D /* Main.storyboard */,
 				7C79E2871DB328BE00248F9D /* Assets.xcassets */,
 				7C79E2891DB328BE00248F9D /* LaunchScreen.storyboard */,

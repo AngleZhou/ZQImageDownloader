@@ -11,6 +11,12 @@
 #import "ZQImageDownloadHeader.h"
 
 
+@interface ZQDownloadToken : NSObject
+@property (nonatomic, strong) NSURL *url;
+@property (nonatomic, strong) id downloadCancelToken;
+@end
+
+
 @interface ZQImageDownloadManager : NSObject
 @property (nonatomic, assign) NSInteger maxConcurrentDownloads;
 @property (nonatomic, assign) NSTimeInterval downloadTimeout;

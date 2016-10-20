@@ -9,12 +9,19 @@
 #import "ZQImageDownloadManager.h"
 #import "ZQImageDownloadOperation.h"
 
+
+@implementation ZQDownloadToken
+
+@end
+
+
+
 @interface ZQImageDownloadManager () <NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 @property (nonatomic, strong) NSOperationQueue *downloadQueue;
 @property (nonatomic, strong) dispatch_queue_t barrierQueue;
 @property (nonatomic, strong) NSURLSession *session;
 
-@property (nonatomic, strong) NSMutableDictionary <NSURL*, ZQImageDownloadOperation*> *operations;
+@property (nonatomic, strong) NSMutableDictionary <NSURL*, ZQImageDownloadOperation*> *operations;//方便查找, 需要在operation创建，取消或者完成时更新
 @end
 
 @implementation ZQImageDownloadManager
@@ -47,30 +54,54 @@
     _session = nil;
 }
 
+//<A,B,C>同时调用，
+- (void)cancel:(ZQDownloadToken *)token {
+    dispatch_barrier_async(self.barrierQueue, ^{
+        ZQImageDownloadOperation *op = self.operations[token.url];
+        BOOL bCancel = [op cancel:token];
+        if (bCancel) {
+            [self.operations removeObjectForKey:token.url];
+        }
+    });
+    
+}
+- (void)cancelAll {
+    [self.downloadQueue cancelAllOperations];
+    [self.operations removeAllObjects];
+}
+
 #pragma mark - Public API
 
+//<A,B,C>同时调用，需要对同一个Operation的hanlders修改，每个object一个唯一的cancelToken
 - (id)downloadImageWithURL:(NSURL *)url progress:(ZQImageDownloadProgressBlock)progressBlock completion:(ZQImageDownloadDoneBlock)doneBlock {
     if (!url) {
         return nil;
     }
     
-    ZQImageDownloadOperation *operation = self.operations[url];
-    if (!operation) {
-        if (self.downloadTimeout == 0.0) {
-            self.downloadTimeout = 30.0;
+    __block ZQDownloadToken *downloadToken;
+    //同步执行以便返回，栅栏块防止handlers被A,B,C同时修改
+    dispatch_barrier_sync(self.barrierQueue, ^{
+        ZQImageDownloadOperation *operation = self.operations[url];
+        if (!operation) {
+            if (self.downloadTimeout == 0.0) {
+                self.downloadTimeout = 30.0;
+            }
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:self.downloadTimeout];
+            operation = [[ZQImageDownloadOperation alloc] initWithRequest:request inSession:self.session progress:progressBlock completion:doneBlock];
+            operation.completionBlock = ^{
+                [self.operations removeObjectForKey:url];
+            };
+            [self.downloadQueue addOperation:operation];
+            self.operations[url] = operation;
         }
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:self.downloadTimeout];
-        operation = [[ZQImageDownloadOperation alloc] initWithRequest:request inSession:self.session progress:progressBlock completion:doneBlock];
-        [self.downloadQueue addOperation:operation];
-        self.operations[url] = operation;
-    }
-    
-    NSDictionary *dic = @{kOperationProcessBlock : progressBlock,
-                          kOperationDoneBlock : doneBlock};
-    [operation.blocks addObject:dic];
-    
-    
-    return operation;
+        
+        id opHandler = [operation addHandlersOfProgressBlock:progressBlock doneBlock:doneBlock];
+        downloadToken = [ZQDownloadToken new];
+        downloadToken.url = url;
+        downloadToken.downloadCancelToken = opHandler;
+    });
+
+    return downloadToken;
 }
 
 

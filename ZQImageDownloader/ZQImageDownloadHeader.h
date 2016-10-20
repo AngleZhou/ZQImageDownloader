@@ -9,7 +9,7 @@
 #ifndef ZQImageDownloadHeader_h
 #define ZQImageDownloadHeader_h
 
-typedef void(^ZQImageDownloadProgressBlock)(CGFloat progress);
+typedef void(^ZQImageDownloadProgressBlock)(NSUInteger imageDataLength, NSInteger expectedSize);
 typedef void(^ZQImageDownloadDoneBlock)(UIImage *image, NSData *imageData, NSError *error);
 typedef void(^ZQImageDownloadCancelBlock)(void);
 

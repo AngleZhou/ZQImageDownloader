@@ -19,7 +19,7 @@
     [super viewDidLoad];
     
     ZQImageCache *cache = [ZQImageCache sharedInstance];
-    [cache storeImage:[UIImage imageNamed:@"天气"] withKey:@"tianqi"];
+//    [cache storeImage:[UIImage imageNamed:@"天气"] withKey:@"tianqi"];
 }
 
 - (void)didReceiveMemoryWarning {

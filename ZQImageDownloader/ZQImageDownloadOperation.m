@@ -59,6 +59,8 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
     return YES;
 }
 
+#pragma mark - Public API
+
 //保留<A, B, C>不同的处理
 - (id)addHandlersOfProgressBlock:(ZQImageDownloadProgressBlock)progressBlock doneBlock:(ZQImageDownloadDoneBlock)doneBlock {
     ZQHandlersDictionary *hd = [ZQHandlersDictionary new];
@@ -94,20 +96,22 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
 #pragma mark - Status
 
 - (void)cancel {
+    if (self.isFinished) {
+        return;
+    }
+    
     @synchronized (self) {
-        if (self.isFinished) {
-            return;
-        }
         if (self.dataTask) {
             [self.dataTask cancel];
         }
-        if (!self.isFinished) {
-            self.finished = YES;
-        }
-        if (self.isExecuting) {
-            self.executing = NO;
-        }
     }
+    if (!self.isFinished) {
+        self.finished = YES;
+    }
+    if (self.isExecuting) {
+        self.executing = NO;
+    }
+    
     [self reset];
 }
 - (void)done {
@@ -118,7 +122,6 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
 
 - (void)reset {
     self.imageData = nil;
-    [self.dataTask cancel];
     self.dataTask = nil;
     [self.handlers removeAllObjects];
     self.request = nil;
@@ -131,8 +134,11 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
         return;
     }
     
-    self.dataTask = [self.session dataTaskWithRequest:self.request];
-    [self.dataTask resume];
+    @synchronized (self) {
+        self.dataTask = [self.session dataTaskWithRequest:self.request];
+        [self.dataTask resume];
+    }
+    
     for (ZQImageDownloadProgressBlock process in [self handlersForKey:kOperationProcessBlock]) {
         process(0, 0);
     }
@@ -161,7 +167,10 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
 #pragma mark - NSURLSessionTaskDelegate
 //完成
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    //
+    @synchronized (self) {
+        self.dataTask = nil;
+    }
+    
     if ([self handlersForKey:kOperationDoneBlock].count > 0) {
         if (error) {
             [self doneBlocksWithImage:nil imageData:nil error:error];

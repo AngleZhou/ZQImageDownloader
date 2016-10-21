@@ -149,8 +149,11 @@
                 }
                 
             }
-            //TODO: 下载图片
-            
+            //没有cache
+            if (completion) {
+                completion(nil);
+            }
+
         }
         
     });

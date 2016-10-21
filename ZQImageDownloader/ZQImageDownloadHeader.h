@@ -9,12 +9,14 @@
 #ifndef ZQImageDownloadHeader_h
 #define ZQImageDownloadHeader_h
 
+#import <UIKit/UIKit.h>
+
 typedef void(^ZQImageDownloadProgressBlock)(NSUInteger imageDataLength, NSInteger expectedSize);
 typedef void(^ZQImageDownloadDoneBlock)(UIImage *image, NSData *imageData, NSError *error);
 typedef void(^ZQImageDownloadCancelBlock)(void);
 
-NSString * const kOperationProcessBlock = @"kOperationProcessBlock";
-NSString * const kOperationDoneBlock = @"kOperationDoneBlock";
+static NSString * const kOperationProcessBlock = @"kOperationProcessBlock";
+static NSString * const kOperationDoneBlock = @"kOperationDoneBlock";
 
 #ifndef dispatch_main_async_safe
 #define dispatch_main_async_safe(block)\

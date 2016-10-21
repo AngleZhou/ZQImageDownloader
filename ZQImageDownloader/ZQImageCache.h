@@ -18,8 +18,10 @@ typedef void(^ZQimageCacheNoParamBlock)();
 + (instancetype)sharedInstance;
 
 - (void)storeImage:(UIImage *)image withImageURL:(NSString *)imageURLStr;
+
 - (void)getImageWithImageURL:(NSString *)imageURLStr completion:(ZQImageCacheGetComplection)completion;
 - (void)getThumbImageWithImageURL:(NSString *)imageURLStr completion:(ZQImageCacheGetComplection)completion;
+
 - (void)clearMemoryCache;
 - (void)clearDiskCacheWithCompletion:(ZQimageCacheNoParamBlock)completion;
 

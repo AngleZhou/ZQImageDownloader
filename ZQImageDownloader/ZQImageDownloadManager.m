@@ -26,14 +26,7 @@
 
 @implementation ZQImageDownloadManager
 
-+ (instancetype)sharedInstance {
-    static ZQImageDownloadManager *shared;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        shared = [[self alloc] init];
-    });
-    return shared;
-}
+#pragma mark - life cycle
 
 - (instancetype)init {
     return [self initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -71,6 +64,15 @@
 }
 
 #pragma mark - Public API
+
++ (instancetype)sharedInstance {
+    static ZQImageDownloadManager *shared;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shared = [[self alloc] init];
+    });
+    return shared;
+}
 
 //<A,B,C>同时调用，需要对同一个Operation的hanlders修改，每个object一个唯一的cancelToken
 - (id)downloadImageWithURL:(NSURL *)url progress:(ZQImageDownloadProgressBlock)progressBlock completion:(ZQImageDownloadDoneBlock)doneBlock {

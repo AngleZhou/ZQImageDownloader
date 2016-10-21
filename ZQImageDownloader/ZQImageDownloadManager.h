@@ -21,5 +21,8 @@
 @property (nonatomic, assign) NSInteger maxConcurrentDownloads;
 @property (nonatomic, assign) NSTimeInterval downloadTimeout;
 
++ (instancetype)sharedInstance;
 - (id)downloadImageWithURL:(NSURL *)url progress:(ZQImageDownloadProgressBlock)progressBlock completion:(ZQImageDownloadDoneBlock)doneBlock;
+- (void)cancelAll;
+- (void)cancel:(ZQDownloadToken *)token;
 @end

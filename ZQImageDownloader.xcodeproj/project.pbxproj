@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C226BFF1DB9A836003134AD /* ZQImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C226BFE1DB9A836003134AD /* ZQImageManager.m */; };
 		7C79E27D1DB328BE00248F9D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E27C1DB328BE00248F9D /* main.m */; };
 		7C79E2801DB328BE00248F9D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E27F1DB328BE00248F9D /* AppDelegate.m */; };
 		7C79E2831DB328BE00248F9D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E2821DB328BE00248F9D /* ViewController.m */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C226BFD1DB9A836003134AD /* ZQImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQImageManager.h; sourceTree = "<group>"; };
+		7C226BFE1DB9A836003134AD /* ZQImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQImageManager.m; sourceTree = "<group>"; };
 		7C79E2781DB328BE00248F9D /* ZQImageDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZQImageDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C79E27C1DB328BE00248F9D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7C79E27E1DB328BE00248F9D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -72,6 +75,8 @@
 				7C79E27F1DB328BE00248F9D /* AppDelegate.m */,
 				7C79E2811DB328BE00248F9D /* ViewController.h */,
 				7C79E2821DB328BE00248F9D /* ViewController.m */,
+				7C226BFD1DB9A836003134AD /* ZQImageManager.h */,
+				7C226BFE1DB9A836003134AD /* ZQImageManager.m */,
 				7C79E2931DB3533900248F9D /* ZQImageCache.h */,
 				7C79E2941DB3533900248F9D /* ZQImageCache.m */,
 				7C79E2991DB3CC5800248F9D /* ZQImageDownloadManager.h */,
@@ -169,6 +174,7 @@
 				7C79E29E1DB3CF5700248F9D /* ZQImageDownloadOperation.m in Sources */,
 				7C79E2831DB328BE00248F9D /* ViewController.m in Sources */,
 				7C79E2801DB328BE00248F9D /* AppDelegate.m in Sources */,
+				7C226BFF1DB9A836003134AD /* ZQImageManager.m in Sources */,
 				7C79E29B1DB3CC5800248F9D /* ZQImageDownloadManager.m in Sources */,
 				7C79E27D1DB328BE00248F9D /* main.m in Sources */,
 				7C79E2951DB3533900248F9D /* ZQImageCache.m in Sources */,
@@ -320,6 +326,7 @@
 				7C79E2911DB328BE00248F9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

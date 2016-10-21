@@ -22,10 +22,28 @@ typedef NSMutableDictionary<NSString*, id> ZQHandlersDictionary;
 @property (nonatomic, strong) NSMutableArray *handlers;
 @property (nonatomic, assign) NSInteger expectedSize;
 
+/**
+ *  Init an ZQImageDownloadOperation object.
+ 
+ *  @return ZQImageDownloadOperation
+ 
+ *  @param  request         request to download image from a url
+ *  @param  session         the session which download tasks run on.
+ *  @param  progressBlock   progress callback.
+ *  @param  doneBlock       completion callback.
+ */
 - (instancetype)initWithRequest:(NSURLRequest *)request inSession:(NSURLSession *)session progress:(ZQImageDownloadProgressBlock)progressBlock completion:(ZQImageDownloadDoneBlock)doneBlock;
 
-
+/**
+ *  Cancel an download operation
+ */
 - (BOOL)cancel:(id)cancelToken;
+
+/**
+ *  Bind process Blocks of the same url to one operation. 
+ 
+ *  @return an object to identify every call.
+ */
 - (id)addHandlersOfProgressBlock:(ZQImageDownloadProgressBlock)progressBlock doneBlock:(ZQImageDownloadDoneBlock)doneBlock;
 
 

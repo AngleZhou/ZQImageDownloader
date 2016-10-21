@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, strong) NSString *urlString1;
+@property (nonatomic, strong) NSString *urlString2;
+
 
 @end
 

@@ -18,6 +18,9 @@ typedef void(^ZQImageDownloadCancelBlock)(void);
 static NSString * const kOperationProcessBlock = @"kOperationProcessBlock";
 static NSString * const kOperationDoneBlock = @"kOperationDoneBlock";
 
+
+static int64_t kAsyncTestTimeout = 30;
+
 #ifndef dispatch_main_async_safe
 #define dispatch_main_async_safe(block)\
 if (strcmp(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL), dispatch_queue_get_label(dispatch_get_main_queue())) == 0) {\

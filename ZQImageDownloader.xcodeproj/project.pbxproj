@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7C226BFF1DB9A836003134AD /* ZQImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C226BFE1DB9A836003134AD /* ZQImageManager.m */; };
+		7C226C5C1DB9BD0E003134AD /* ZQTestDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C226C5B1DB9BD0E003134AD /* ZQTestDownloadManager.m */; };
 		7C79E27D1DB328BE00248F9D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E27C1DB328BE00248F9D /* main.m */; };
 		7C79E2801DB328BE00248F9D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E27F1DB328BE00248F9D /* AppDelegate.m */; };
 		7C79E2831DB328BE00248F9D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E2821DB328BE00248F9D /* ViewController.m */; };
@@ -17,11 +18,28 @@
 		7C79E2951DB3533900248F9D /* ZQImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E2941DB3533900248F9D /* ZQImageCache.m */; };
 		7C79E29B1DB3CC5800248F9D /* ZQImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E29A1DB3CC5800248F9D /* ZQImageDownloadManager.m */; };
 		7C79E29E1DB3CF5700248F9D /* ZQImageDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C79E29D1DB3CF5700248F9D /* ZQImageDownloadOperation.m */; };
+		7CB377AC1DB9DF3C0041E341 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB377AB1DB9DF3C0041E341 /* TableViewController.m */; };
+		7CB377AF1DB9E68E0041E341 /* ZQTestImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB377AE1DB9E68E0041E341 /* ZQTestImageCache.m */; };
+		7CB377B11DB9E88B0041E341 /* TestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB377B01DB9E88B0041E341 /* TestImage.png */; };
+		7CB377B31DB9E89B0041E341 /* TestImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7CB377B21DB9E89B0041E341 /* TestImage.jpg */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7C226C561DB9BCCC003134AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C79E2701DB328BE00248F9D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7C79E2771DB328BE00248F9D;
+			remoteInfo = ZQImageDownloader;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		7C226BFD1DB9A836003134AD /* ZQImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQImageManager.h; sourceTree = "<group>"; };
 		7C226BFE1DB9A836003134AD /* ZQImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQImageManager.m; sourceTree = "<group>"; };
+		7C226C511DB9BCCC003134AD /* ZQImageDownloaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZQImageDownloaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C226C551DB9BCCC003134AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C226C5B1DB9BD0E003134AD /* ZQTestDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQTestDownloadManager.m; sourceTree = "<group>"; };
 		7C79E2781DB328BE00248F9D /* ZQImageDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZQImageDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C79E27C1DB328BE00248F9D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7C79E27E1DB328BE00248F9D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -39,9 +57,21 @@
 		7C79E29C1DB3CF5700248F9D /* ZQImageDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQImageDownloadOperation.h; sourceTree = "<group>"; };
 		7C79E29D1DB3CF5700248F9D /* ZQImageDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQImageDownloadOperation.m; sourceTree = "<group>"; };
 		7C79E2A11DB7B79500248F9D /* ZQImageDownloadHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQImageDownloadHeader.h; sourceTree = "<group>"; };
+		7CB377AA1DB9DF3C0041E341 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		7CB377AB1DB9DF3C0041E341 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		7CB377AE1DB9E68E0041E341 /* ZQTestImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQTestImageCache.m; sourceTree = "<group>"; };
+		7CB377B01DB9E88B0041E341 /* TestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TestImage.png; sourceTree = "<group>"; };
+		7CB377B21DB9E89B0041E341 /* TestImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TestImage.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7C226C4E1DB9BCCC003134AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C79E2751DB328BE00248F9D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,10 +82,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C226C521DB9BCCC003134AD /* ZQImageDownloaderTests */ = {
+			isa = PBXGroup;
+			children = (
+				7CB377B21DB9E89B0041E341 /* TestImage.jpg */,
+				7CB377B01DB9E88B0041E341 /* TestImage.png */,
+				7C226C5B1DB9BD0E003134AD /* ZQTestDownloadManager.m */,
+				7CB377AE1DB9E68E0041E341 /* ZQTestImageCache.m */,
+				7C226C551DB9BCCC003134AD /* Info.plist */,
+			);
+			path = ZQImageDownloaderTests;
+			sourceTree = "<group>";
+		};
 		7C79E26F1DB328BE00248F9D = {
 			isa = PBXGroup;
 			children = (
 				7C79E27A1DB328BE00248F9D /* ZQImageDownloader */,
+				7C226C521DB9BCCC003134AD /* ZQImageDownloaderTests */,
 				7C79E2791DB328BE00248F9D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				7C79E2781DB328BE00248F9D /* ZQImageDownloader.app */,
+				7C226C511DB9BCCC003134AD /* ZQImageDownloaderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +117,8 @@
 			children = (
 				7C79E27E1DB328BE00248F9D /* AppDelegate.h */,
 				7C79E27F1DB328BE00248F9D /* AppDelegate.m */,
+				7CB377AA1DB9DF3C0041E341 /* TableViewController.h */,
+				7CB377AB1DB9DF3C0041E341 /* TableViewController.m */,
 				7C79E2811DB328BE00248F9D /* ViewController.h */,
 				7C79E2821DB328BE00248F9D /* ViewController.m */,
 				7C226BFD1DB9A836003134AD /* ZQImageManager.h */,
@@ -104,6 +150,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		7C226C501DB9BCCC003134AD /* ZQImageDownloaderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C226C581DB9BCCD003134AD /* Build configuration list for PBXNativeTarget "ZQImageDownloaderTests" */;
+			buildPhases = (
+				7C226C4D1DB9BCCC003134AD /* Sources */,
+				7C226C4E1DB9BCCC003134AD /* Frameworks */,
+				7C226C4F1DB9BCCC003134AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7C226C571DB9BCCC003134AD /* PBXTargetDependency */,
+			);
+			name = ZQImageDownloaderTests;
+			productName = ZQImageDownloaderTests;
+			productReference = 7C226C511DB9BCCC003134AD /* ZQImageDownloaderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		7C79E2771DB328BE00248F9D /* ZQImageDownloader */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7C79E28F1DB328BE00248F9D /* Build configuration list for PBXNativeTarget "ZQImageDownloader" */;
@@ -130,6 +194,12 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Zhou Qian";
 				TargetAttributes = {
+					7C226C501DB9BCCC003134AD = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = TY5BGTTSVP;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 7C79E2771DB328BE00248F9D;
+					};
 					7C79E2771DB328BE00248F9D = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
@@ -149,11 +219,21 @@
 			projectRoot = "";
 			targets = (
 				7C79E2771DB328BE00248F9D /* ZQImageDownloader */,
+				7C226C501DB9BCCC003134AD /* ZQImageDownloaderTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		7C226C4F1DB9BCCC003134AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CB377B11DB9E88B0041E341 /* TestImage.png in Resources */,
+				7CB377B31DB9E89B0041E341 /* TestImage.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C79E2761DB328BE00248F9D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -167,6 +247,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7C226C4D1DB9BCCC003134AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C226C5C1DB9BD0E003134AD /* ZQTestDownloadManager.m in Sources */,
+				7CB377AF1DB9E68E0041E341 /* ZQTestImageCache.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C79E2741DB328BE00248F9D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -178,10 +267,19 @@
 				7C79E29B1DB3CC5800248F9D /* ZQImageDownloadManager.m in Sources */,
 				7C79E27D1DB328BE00248F9D /* main.m in Sources */,
 				7C79E2951DB3533900248F9D /* ZQImageCache.m in Sources */,
+				7CB377AC1DB9DF3C0041E341 /* TableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7C226C571DB9BCCC003134AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7C79E2771DB328BE00248F9D /* ZQImageDownloader */;
+			targetProxy = 7C226C561DB9BCCC003134AD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7C79E2841DB328BE00248F9D /* Main.storyboard */ = {
@@ -203,6 +301,40 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		7C226C591DB9BCCD003134AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = TY5BGTTSVP;
+				INFOPLIST_FILE = ZQImageDownloaderTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.angle.test.ZQImageDownloaderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZQImageDownloader.app/ZQImageDownloader";
+			};
+			name = Debug;
+		};
+		7C226C5A1DB9BCCD003134AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = TY5BGTTSVP;
+				INFOPLIST_FILE = ZQImageDownloaderTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.angle.test.ZQImageDownloaderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZQImageDownloader.app/ZQImageDownloader";
+			};
+			name = Release;
+		};
 		7C79E28D1DB328BE00248F9D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -310,6 +442,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7C226C581DB9BCCD003134AD /* Build configuration list for PBXNativeTarget "ZQImageDownloaderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C226C591DB9BCCD003134AD /* Debug */,
+				7C226C5A1DB9BCCD003134AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7C79E2731DB328BE00248F9D /* Build configuration list for PBXProject "ZQImageDownloader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

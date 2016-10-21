@@ -34,6 +34,7 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
         _session = session;
         
         _expectedSize = 0;
+        _imageData = [[NSMutableData alloc] init];
         
         _handlers = [NSMutableArray array];
         _barrierQueue = dispatch_queue_create("com.ZQImageDownloadOperation.barrierQueue", DISPATCH_QUEUE_CONCURRENT);
@@ -140,14 +141,21 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
     }
     
     for (ZQImageDownloadProgressBlock process in [self handlersForKey:kOperationProcessBlock]) {
-        process(0, 0);
+        dispatch_main_async_safe(^{
+            process(0, 0);
+        });
+        
     }
 }
 
 - (NSArray *)handlersForKey:(NSString *)key {
     NSMutableArray *mArr = [NSMutableArray array];
     for (NSDictionary *dic in self.handlers) {
-        [mArr addObject:dic[key]];
+        id handler = dic[key];
+        if (handler) {
+            [mArr addObject:handler];
+        }
+        
     }
     return mArr;
 }
@@ -165,6 +173,8 @@ NSString *const ZQImageErrorDomain = @"ZQImageErrorDomain";
 }
 
 #pragma mark - NSURLSessionTaskDelegate
+
+
 //完成
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     @synchronized (self) {
@@ -222,19 +232,32 @@ didReceiveResponse:(NSURLResponse *)response
  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     NSLog(@"%@", response);
     self.expectedSize = ((NSHTTPURLResponse *)response).expectedContentLength;
+    NSLog(@"%zdK", self.expectedSize / 1024);
+    
+    if (completionHandler) {
+        completionHandler(NSURLSessionResponseAllow);
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     [self.imageData appendData:data];
+    NSLog(@"%zd", self.imageData.length);
+    if (self.imageData.length - self.expectedSize < 1) {
+        NSLog(@"Done!!!!!!!!!!!");
+    }
     //progress handling
     for (ZQImageDownloadProgressBlock progressBlock in [self handlersForKey:kOperationProcessBlock]) {
-        progressBlock(self.imageData.length, self.expectedSize);
+        dispatch_main_async_safe(^{
+            progressBlock(self.imageData.length, self.expectedSize);
+        });
+        
     }
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable))completionHandler {
-    
-}
+//- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable))completionHandler {
+//    
+//}
+
 
 
 

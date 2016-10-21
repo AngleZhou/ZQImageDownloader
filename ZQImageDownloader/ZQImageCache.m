@@ -39,6 +39,18 @@
 
 #pragma mark - Public
 
+- (UIImage *)storeThumbImage:(UIImage *)image withImageURL:(NSString *)imageURLStr {
+    if (!image || !imageURLStr) {
+        return nil;
+    }
+    UIImage *thumb = [self thumbImage:image];
+    NSString *thumbKey = [imageURLStr stringByAppendingString:@"_thumb"];
+    [self storeImageInMemory:thumb key:thumbKey];
+    [self storeImage:thumb withImageURL:thumbKey toDisk:YES];
+    [self storeImage:image withImageURL:imageURLStr toDisk:YES];
+    return thumb;
+}
+
 - (void)storeImage:(UIImage *)image withImageURL:(NSString *)imageURLStr {
 #ifdef debug
     NSAssert(image == nil, @"image is nil");
@@ -52,6 +64,19 @@
     //TODO get png imageData; what aout other image format?
     [self storeImageInMemory:image key:imageURLStr];
     [self storeImageData:imageData key:imageURLStr toDisk:self.cachePathDisk];
+}
+- (void)storeImage:(UIImage *)image withImageURL:(NSString *)imageURLStr toDisk:(BOOL)toDisk {
+    if (!image || !imageURLStr) {
+        return;
+    }
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+    if (!toDisk) {
+        [self storeImageInMemory:image key:imageURLStr];
+    }
+    else {
+        [self storeImageData:imageData key:imageURLStr toDisk:self.cachePathDisk];
+    }
 }
 
 
@@ -79,13 +104,25 @@
         if (![fileManager createDirectoryAtPath:self.cachePathDisk withIntermediateDirectories:YES attributes:nil error:&error]) {
             NSLog(@"%@", [error localizedDescription]);
         }
+        NSLog(@"%zd", [[NSThread currentThread] isMainThread]);
         if (completion) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion();
-            });
+            completion();
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                NSLog(@"%zd", [[NSThread currentThread] isMainThread]);
+//                completion();
+//            });
         }
         
     });
+}
+
+- (UIImage *)imageFromMemoryCacheForKey:(NSString *)key {
+    return [self.cacheMemory objectForKey:key];
+}
+
+- (void)imageFromDiskCacheForKey:(NSString *)key completion:(ZQImageCacheGetComplection)completion {
+    [self imageInDiskWithKey:key bThumb:NO completion:completion];
+    
 }
 #pragma mark - Private
 
@@ -124,6 +161,7 @@
         if (bExist) {
             NSData *imageData = [NSData dataWithContentsOfFile:diskPath];
             UIImage *image = [UIImage imageWithData:imageData];
+            [self storeImageInMemory:image key:key];
             if (completion) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completion(image);
@@ -131,6 +169,7 @@
             }
         }
         else {
+            //如果内存和Disk都没有thumb image,在disk找original image, 找到生成thumb，并存到内存和disk
             if (bThumb) {
                 NSString *originImgKey = [key substringToIndex:(key.length-6)];
                 NSString *originImgPath = [wSelf.cachePathDisk stringByAppendingPathComponent:originImgKey];
